@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование пользователя</title>
+</head>
+<body>
+<br/>
+<br/>
+<form action="#" th:action="@{/admin/{id}/edit_user(id = ${user.getId()})}" th:object="${user}" th:method="post">
+    <label for="firstName"> Имя: </label>
+    <input type="text" th:field="*{firstName}" id="firstName"/>
+    <br/><br/>
+    <label for="lastName"> Фамилия: </label>
+    <input type="text" th:field="*{lastName}" id="lastName"/>
+    <br/><br/>
+    <label for="city"> Город: </label>
+    <input type="text" th:field="*{city}" id="city"/>
+    <label for="username">Логин</label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <br/><br/>
+    <label for="password">Пароль</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <br/><br/>
+    <label>Выберите роль:
+        <input type="checkbox" name="roles"
+               th:each="role : ${roles}"
+               th:value="${role.getRoleId()}"
+               th:text="${role.getRoleName()}"
+               th:checked="${#lists.contains(user.roles, role)}"
+        />
+    </label>
+    <br/><br/>
+    <input type="submit" value="Сохранить"/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/admin}">
+    <input type="submit" value="Отмена">
+</form>
+</body>
+</html>
