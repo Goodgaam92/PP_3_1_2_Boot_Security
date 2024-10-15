@@ -37,11 +37,11 @@ public class Init {
             Role adminRole = new Role("ROLE_ADMIN");
             Role userRole = new Role("ROLE_USER");
 
-            User admin = new User("Admin", "Admin", new String(), "admin", "admin");
+            User admin = new User("Admin", "Admin", "Moscow", "admin", "admin");
             admin.getRoles().add(adminRole);
             userService.saveUser(admin);
 
-            User user = new User("User", "User", new String(), "user", "user");
+            User user = new User("User", "User", "Kazan", "user", "user");
             user.getRoles().add(userRole);
             userService.saveUser(user);
         };

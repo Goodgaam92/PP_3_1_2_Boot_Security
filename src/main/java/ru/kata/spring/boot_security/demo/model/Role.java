@@ -3,7 +3,8 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,8 +16,10 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "role_name", unique = true)
-    @NotEmpty
+    @NotBlank(message = "Роль не может быть пустой.")
+    @Size(min = 2, max = 30, message = "Роль не может быть пустой.")
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")

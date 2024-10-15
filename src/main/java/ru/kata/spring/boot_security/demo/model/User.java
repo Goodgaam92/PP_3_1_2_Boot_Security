@@ -3,16 +3,18 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -24,24 +26,27 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "first_name")
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
+    @NotEmpty(message = "Имя не должно быть пустым.")
+    @Size(min = 2, max = 30, message = "Имя должно содержать от 2 до 30 символов.")
     private String firstName;
 
     @Column(name = "last_name")
-    @NotEmpty(message = "Lastname should not be empty")
-    @Size(min = 2, max = 30, message = "Lastname should be between 2 and 30 characters")
+    @NotEmpty(message = "Фамилия не должна быть пустой.")
+    @Size(min = 2, max = 30, message = "Фамилия не должна быть пустой.")
     private String lastName;
 
     @Column(name = "city")
+    @Size(max = 50, message = "Название города не должно превышать 50 символов.")
     private String city;
 
-    @NotEmpty
-    @Size(min = 3, max = 30, message = "Username should be between 3 and 30 characters")
+    @NotEmpty(message = "Имя пользователя не должно быть пустым.")
+    @Size(min = 3, max = 30, message = "Имя пользователя должно содержать от 3 до 30 символов.")
     @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)
+    @NotEmpty(message = "Пароль не должен быть пустым")
+    @Size(min = 8, message = "Пароль должен быть длиной не менее 8 символов")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -50,7 +55,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Fetch(FetchMode.JOIN)
     private Set<Role> roles = new HashSet<>();
-
 
     public User() {
     }
@@ -134,7 +138,9 @@ public class User implements UserDetails {
         return city;
     }
 
-    public void setCity(String city) {this.city = city;}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -170,12 +176,12 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-               "id=" + id +
-               ", firstName='" + firstName + '\'' +
-               ", lastName='" + lastName + '\'' +
-               ", city=" + city +
-               ", username='" + username + '\'' +
-               ", roles=" + roles.toString() +
-               '}';
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", city=" + city +
+                ", username='" + username + '\'' +
+                ", roles=" + roles.toString() +
+                '}';
     }
 }
