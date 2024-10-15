@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void saveUser(User user) {
         Set<Role> userRoles = new HashSet<>(user.getRoles());
         for (Role role : userRoles) {
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void delete(Long userId) {
         userRepository.removeUserById(userId);
     }
@@ -68,6 +70,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.updateUser(user);

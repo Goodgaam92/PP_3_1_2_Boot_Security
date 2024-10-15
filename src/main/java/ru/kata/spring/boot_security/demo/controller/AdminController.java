@@ -15,7 +15,6 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.util.Set;
 
 @Controller
-@Transactional
 @RequestMapping("/admin")
 public class AdminController {
     private static final String REDIRECT_TO_ADMIN = "redirect:/admin";
