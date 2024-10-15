@@ -18,28 +18,37 @@ public class RoleServiceImpl implements RoleService {
         this.roleRepository = roleRepository;
     }
 
+    // Операция только для чтения
     @Override
     @Transactional(readOnly = true)
     public Set<Role> getAllRoles() {
         return roleRepository.getAllRoles();
     }
 
+    // Операция изменения данных
     @Override
+    @Transactional
     public Role saveRole(Role role) {
         return roleRepository.saveRole(role);
     }
 
+    // Операция только для чтения
     @Override
+    @Transactional(readOnly = true)
     public Role getRoleById(Long id) {
         return roleRepository.getRoleById(id);
     }
 
+    // Операция изменения данных
     @Override
+    @Transactional
     public void deleteRoleById(Long id) {
         roleRepository.deleteRoleById(id);
     }
 
+    // Операция изменения данных
     @Override
+    @Transactional
     public Set<Role> findDyIds(Set<Long> ids) {
         return roleRepository.findByIds(ids);
     }

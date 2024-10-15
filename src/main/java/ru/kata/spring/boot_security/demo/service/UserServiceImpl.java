@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDAO userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @PersistenceContext // Внедрение EntityManager
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
